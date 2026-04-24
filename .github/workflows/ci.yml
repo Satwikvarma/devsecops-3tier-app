@@ -31,6 +31,10 @@ jobs:
       - name: Build Docker images
         run: docker compose build
 
+      - name: Build Docker image
+        run: |
+           docker build -t three-tier-devsecops-learning-backend:latest 
+   .
       - name: Run Trivy scan (backend)
         uses: aquasecurity/trivy-action@master
         with:
