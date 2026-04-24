@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build-and-scan:
     runs-on: ubuntu-latest
@@ -31,9 +34,16 @@ jobs:
       - name: Build Docker images (docker-compose)
         run: docker compose build
 
-      - name: Build backend image (explicit)
+      - name: Build backend Docker image
         run: |
           docker build -t three-tier-devsecops-learning-backend:latest backend
+
+      - name: Build frontend Docker image
+        run: |
+          docker build -t three-tier-devsecops-learning-frontend:latest frontend
+
+      - name: List Docker images (debug)
+        run: docker images
 
       - name: Run Trivy scan (backend)
         uses: aquasecurity/trivy-action@master
