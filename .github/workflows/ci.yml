@@ -28,21 +28,25 @@ jobs:
           cd frontend
           npm install
 
-      - name: Build Docker images
+      - name: Build Docker images (docker-compose)
         run: docker compose build
 
-      - name: Build Docker image
+      - name: Build backend image (explicit)
         run: |
-           docker build -t three-tier-devsecops-learning-backend:latest 
-   .
+          docker build -t three-tier-devsecops-learning-backend:latest backend
+
       - name: Run Trivy scan (backend)
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'three-tier-devsecops-learning-backend'
-          format: 'table'
+          image-ref: three-tier-devsecops-learning-backend:latest
+          format: table
+          exit-code: 1
+          severity: CRITICAL,HIGH
 
       - name: Run Trivy scan (frontend)
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'three-tier-devsecops-learning-frontend'
-          format: 'table'
+          image-ref: three-tier-devsecops-learning-frontend:latest
+          format: table
+          exit-code: 1
+          severity: CRITICAL,HIGH
