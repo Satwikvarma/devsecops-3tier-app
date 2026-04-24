@@ -44,8 +44,9 @@ Trivy is used to scan Docker images for known vulnerabilities and exposed secret
 
 Clone the repository
 
-git clone <repository-url>  
-cd project-directory  
+'''bash
+    git clone <repository-url>  
+    cd project-directory  
 
 Start the application using Docker Compose
 
